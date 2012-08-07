@@ -11,4 +11,4 @@ Deployment:
 2. Setup PostgreSQL + PostGIS (https://openshift.redhat.com/community/blogs/time-for-a-spatial-power-up-openshift-postgis)
 3. Run ./setup.sh to build and install Python 2.7, pip, uwsgi, proj4, geos, gdal
 4. Setup Django project settings (geodiy_live for OpenShift)
-5. commit-n-push (.openshift/* scripts will do pip requirements installation and uswgi restart).
+5. commit-n-push (.openshift/* scripts will do pip requirements installation and uwsgi restart).
