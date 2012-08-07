@@ -1,4 +1,6 @@
 
+import os
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -110,8 +112,9 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-GEOS_LIBRARY_PATH = '/var/lib/stickshift/<replace_with_openshift_appid>/rooftops/runtime/lib/libgeos_c.so'
-GDAL_LIBRARY_PATH = '/var/lib/stickshift/<replace_with_openshift_appid>/rooftops/runtime/lib/libgdal.so'
+OPENSHIFT_RUNTIME_DIR = os.environ['OPENSHIFT_RUNTIME_DIR']
+GEOS_LIBRARY_PATH = OPENSHIFT_RUNTIME_DIR + 'lib/libgeos_c.so'
+GDAL_LIBRARY_PATH = OPENSHIFT_RUNTIME_DIR + 'lib/libgdal.so'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
