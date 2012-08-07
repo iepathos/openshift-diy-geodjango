@@ -1,0 +1,6 @@
+pytz==2012d
+psycopg2==2.4.5
+simplejson==2.6.1
+Django==1.4.1
+South==0.7.5
+-e git://github.com/toastdriven/django-tastypie.git#egg=tastypie
