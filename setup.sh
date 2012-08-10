@@ -1,7 +1,9 @@
 #!/bin/bash
 
-CFLAGS="-O2 -s"
-CXXFLAGS="-O2 -s"
+export CFLAGS="-O3 -s"
+export CXXFLAGS="-O3 -s"
+export OPT="-O3 -s"
+export PATH=$OPENSHIFT_RUNTIME_DIR/bin:$PATH
 
 cd $OPENSHIFT_TMP_DIR
 
@@ -9,21 +11,11 @@ wget http://python.org/ftp/python/2.7.3/Python-2.7.3.tar.bz2
 tar jxf Python-2.7.3.tar.bz2
 cd Python-2.7.3
 
-export CFLAGS="-O3 -s"
-export CXXFLAGS="-O3 -s"
-export OPT="-O3 -s"
-
 ./configure --prefix=$OPENSHIFT_RUNTIME_DIR
 make
 make install
 
 $OPENSHIFT_RUNTIME_DIR/bin/python -V
-
-export CFLAGS=$CFLAGS
-export CXXFLAGS=$CXXFLAGS
-export OPTS=$CFLAGS
-
-export PATH=$OPENSHIFT_RUNTIME_DIR/bin:$PATH
 
 cd $OPENSHIFT_TMP_DIR
 rm -rf ./Python-2.7.3*
@@ -79,3 +71,19 @@ make install
 cd ..
 rm -rf ./gdal-1.9.1*
 
+
+
+
+createdb -E UTF8 template_postgis
+createlang plpgsql template_postgis
+psql -d template_postgis -f /usr/share/pgsql/contrib/postgis-64.sql
+psql -d template_postgis -f /usr/share/pgsql/contrib/spatial_ref_sys.sql
+createuser -dSLR gis_group
+
+echo "Creating new user (gis_user) for the project..."
+createuser -dlSRE -P gis_user
+
+psql postgres -c "GRANT gis_group TO gis_user;"
+createdb -O gis_group -T template_postgis -E UTF8 project_db
+psql project_db -c "ALTER TABLE geometry_columns OWNER TO gis_group;"
+psql project_db -c "ALTER TABLE spatial_ref_sys OWNER TO gis_group;"
