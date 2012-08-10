@@ -87,3 +87,7 @@ psql postgres -c "GRANT gis_group TO gis_user;"
 createdb -O gis_group -T template_postgis -E UTF8 project_db
 psql project_db -c "ALTER TABLE geometry_columns OWNER TO gis_group;"
 psql project_db -c "ALTER TABLE spatial_ref_sys OWNER TO gis_group;"
+
+
+echo "Activating hooks"
+cp -f $OPENSHIFT_REPO_DIR/.openshift/.template_hooks/* $OPENSHIFT_REPO_DIR/.openshift/action_hooks 
