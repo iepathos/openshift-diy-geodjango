@@ -7,4 +7,4 @@
 APP_NAME=`cat $OPENSHIFT_REPO_DIR/.app_name`
 
 cd $OPENSHIFT_REPO_DIR
-$OPENSHIFT_RUNTIME_DIR/bin/pip install --use-mirrors -r $OPENSHIFT_REPO_DIR/requirements.txt
+$OPENSHIFT_DATA_DIR/bin/pip install --use-mirrors -r $OPENSHIFT_REPO_DIR/requirements.txt
